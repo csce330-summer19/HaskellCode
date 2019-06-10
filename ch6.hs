@@ -33,3 +33,14 @@ merge (x:xs) (y:ys)
    | x <= y    = x : merge xs (y:ys)
    | otherwise = y : merge (x:xs) ys
 
+msort [] = []
+msort [x] = [x]
+msort xs = merge (msort ls) (msort rs)
+   where
+      halfn = length xs `div` 2
+      ls = take halfn xs
+      rs = drop halfn xs
+
+none _ [] = True
+none p xs = (not.(any p) ) xs
+

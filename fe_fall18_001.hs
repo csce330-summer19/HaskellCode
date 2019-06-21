@@ -41,10 +41,29 @@ evenSquareds' [] = []
 evenSquareds' (x:xs) 
     | odd x = evenSquareds' xs
     | otherwise = x*x : evenSquareds' xs
-{-
+
 addTicks :: String -> String -> String
+addTicks ts "" = ts
+addTicks ts (y:ys) = addTicks (y:ts) ys
 
 evenPowersOf3 :: Num a => [a]
+evenPowersOf3 = map (3^) $ filter even [0..]
 
--}
+evenPowersOf3' :: Num a => [a]
+evenPowersOf3' = map (3^)  [0,2..]
 
+evenPowersOf3'' :: Num a => [a]
+evenPowersOf3'' = foldr (\n ns -> 1: map ((3*3)*) ns) [] [6,6..]
+
+type Event = (Double,String)
+
+type SampleSpace = [Event]
+
+prob :: Event -> Double
+prob (p,_) = p
+
+moreLikely :: Event -> Event -> Bool
+moreLikely x y = prob x > prob y
+
+valid :: SampleSpace -> Bool
+valid xs = sum (map prob xs ) == 1.0
